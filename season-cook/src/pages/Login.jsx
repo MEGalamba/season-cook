@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useState } from "react";
 
@@ -14,31 +14,35 @@ function Login() {
     setPassword(event.target.value);
   }
 
+  async function handleLogin(event) {
+    event.preventDefault(); // 🔴 MUITO IMPORTANTE
 
-  const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-  };
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      console.log("Login com sucesso:", userCredential.user);
+    } catch (error) {
+      console.error(error.code, error.message);
+    }
+  }
 
   return (
     <div>
       <h2>Login</h2>
 
       <form onSubmit={handleLogin}>
-        <input 
+        <input
           type="email"
-          value={email} 
-          placeholder="Email" 
+          value={email}
+          placeholder="Email"
           onChange={handleEmailChange}
-          required />
+          required
+        />
+
         <input
           type="password"
           value={password}
@@ -46,6 +50,7 @@ function Login() {
           onChange={handlePasswordChange}
           required
         />
+
         <button type="submit">Login</button>
       </form>
     </div>

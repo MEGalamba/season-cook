@@ -1,33 +1,61 @@
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState } from "react";
+import { auth } from "../services/firebase";
 
 function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+
+  async function handleRegister(event) {
+    event.preventDefault(); 
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      console.log("Utilizador criado:", userCredential.user);
     
-const auth = getAuth();
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
- return (
+    } catch (error) {
+      console.error(error.code, error.message);
+    }
+  }
+
+  return (
     <div>
-    <h2>Registo</h2>
-          <form onSubmit={createUserWithEmailAndPassword}>
-            <input name="email" type="email" placeholder="Email" required />
-            <input name="password" type="password" placeholder="Password" required />
-            <input name="same_password" type="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-          </form>
-          </div>
- )
+      <h2>Registo</h2>
+
+      <form onSubmit={handleRegister}>
+        <input
+          type="email"
+          value={email}
+          placeholder="Email"
+          onChange={handleEmailChange}
+          required
+        />
+
+        <input
+          type="password"
+          value={password}
+          placeholder="Password"
+          onChange={handlePasswordChange}
+          required
+        />
+
+        <button type="submit">Registo</button>
+      </form>
+    </div>
+  );
 }
 
 export default Register;
-  //register form
-
