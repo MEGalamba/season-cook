@@ -1,75 +1,55 @@
-import { useState, useEffect } from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { useState } from "react";
 
-export default function Login() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      window.location.href = "/dashboard";
-    }
-  }, []);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-
-    if (!email || !password) {
-      setError("Preencha todos os campos.");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const res = await fetch("https://api.exemplo.com/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!res.ok) throw new Error("Credenciais inválidas");
-
-      const data = await res.json();
-
-      localStorage.setItem("token", data.token);
-
-      window.location.href = "/dashboard";
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
   }
 
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
+
   return (
-    <div className="login-container">
-      <h1>Login</h1>
+    <div>
+      <h2>Login</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
+      <form onSubmit={handleLogin}>
+        <input 
           type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-
+          value={email} 
+          placeholder="Email" 
+          onChange={handleEmailChange}
+          required />
         <input
           type="password"
-          placeholder="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          placeholder="Password"
+          onChange={handlePasswordChange}
+          required
         />
-
-        <button type="submit" disabled={loading}>
-          {loading ? "A entrar..." : "Entrar"}
-        </button>
+        <button type="submit">Login</button>
       </form>
-
-      {error && <p className="error">{error}</p>}
     </div>
   );
 }
 
+export default Login;
