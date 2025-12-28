@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
-import { getRecipes } from "../../services/recipeSevice";
+import { getRecipes, getRecipesByFoodstuff } from "../../services/recipeSevice";
 import RecipeCard from "./RecipeCard";
 //import recipes from "../data/recipes";
 
-export default function RecipesList() {
+export default function RecipesList({ foodId }) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   async function fetchRecipes() {
     try {
-      const data = await getRecipes();
+      const data = foodId
+        ? await getRecipesByFoodstuff(foodId)
+        : await getRecipes();
       setRecipes(data);
+      console.log(recipes);
     } catch (error) {
       console.log(error);
     } finally {
@@ -20,7 +23,7 @@ export default function RecipesList() {
 
   useEffect(() => {
     fetchRecipes();
-  }, []);
+  }, [foodId]);
 
   if (!loading) {
     return (
