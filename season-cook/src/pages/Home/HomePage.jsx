@@ -1,6 +1,6 @@
 //import BlogHighlights from "./BlogHighlights";
 import Hero from "./Hero";
-import FoodstuffList from "../../components/FoodstuffList";
+import FoodstuffList from "../../components/Foodstuff/FoodstuffList";
 
 //import Footer from "../../components/Footer";
 import RecipesList from "../../components/RecipesList";
