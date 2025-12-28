@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Foodstuff from "./pages/Foodstuff";
 import Recipes from "./pages/Recipes";
+import FoodstuffRecipes from "./pages/FoodstuffRecipes";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/foodstuff" element={<Foodstuff />} />
+
+        <Route path="/foodstuff/:foodId" element={<FoodstuffRecipes />} />
 
         {/* fallback (rota inválida) */}
         <Route path="*" element={<h2>Página não encontrada</h2>} />
