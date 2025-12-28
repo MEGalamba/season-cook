@@ -3,6 +3,8 @@ import HomePage from "./pages/Home/HomePage";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Foodstuff from "./pages/Foodstuff";
+import Recipes from "./pages/Recipes";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         {/* páginas públicas */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/foodstuff" element={<Foodstuff />} />
 
         {/* fallback (rota inválida) */}
         <Route path="*" element={<h2>Página não encontrada</h2>} />
