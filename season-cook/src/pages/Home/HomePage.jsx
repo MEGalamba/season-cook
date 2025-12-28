@@ -3,7 +3,7 @@ import Hero from "./Hero";
 import FoodstuffList from "../../components/Foodstuff/FoodstuffList";
 
 //import Footer from "../../components/Footer";
-import RecipesList from "../../components/RecipesList";
+import RecipesList from "../../components/Recipe/RecipesList";
 import Section from "../../components/Section";
 
 function HomePage() {

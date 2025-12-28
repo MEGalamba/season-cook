@@ -22,9 +22,7 @@ function FoodstuffList() {
     fecthFoodstuffs();
   }, []);
 
-  if (loading) {
-    return "";
-  } else {
+  if (!loading) {
     return (
       <div>
         {foodstuffs.map((food) => (
