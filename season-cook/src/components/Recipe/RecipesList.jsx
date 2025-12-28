@@ -13,7 +13,6 @@ export default function RecipesList({ foodId }) {
         ? await getRecipesByFoodstuff(foodId)
         : await getRecipes();
       setRecipes(data);
-      console.log(recipes);
     } catch (error) {
       console.log(error);
     } finally {

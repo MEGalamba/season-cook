@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .env*
+
+
+# seed for database firebase
+src/services/seed
