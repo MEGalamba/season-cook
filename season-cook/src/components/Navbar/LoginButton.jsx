@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 function LoginButton() {
   return (
-    <button className="login-btn">
-      Login
-    </button>
+    <Link to="/Login">
+      <button className="login-btn">Login</button>
+    </Link>
   );
 }
 

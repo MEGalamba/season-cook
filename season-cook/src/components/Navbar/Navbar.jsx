@@ -1,6 +1,7 @@
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 import LoginButton from "./LoginButton";
+import RegisterButton from "./RegisterButton";
 import "./Navbar.css";
 
 function Navbar() {
@@ -9,6 +10,7 @@ function Navbar() {
       <Logo />
       <NavLinks />
       <LoginButton />
+      <RegisterButton />
     </nav>
   );
 }
