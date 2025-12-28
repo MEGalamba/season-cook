@@ -1,0 +1,26 @@
+function RecipeCard({ recipe }) {
+  return (
+    <div>
+      <h2>{recipe.title}</h2>
+      <p>{recipe.season}</p>
+      <p>{recipe.time}</p>
+      <p>{recipe.image}</p>
+      <ul>
+        {recipe.ingredients.map((food) => (
+          <li key={food.foodId}>
+            {food.name}
+            {food.quantity}
+            {food.unit}
+          </li>
+        ))}
+      </ul>
+      <ol>
+        {recipe.instructions.map((instruction, index) => (
+          <li key={index}>{instruction}</li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+export default RecipeCard;

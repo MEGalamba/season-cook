@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -14,8 +15,10 @@ function Register() {
     setPassword(event.target.value);
   }
 
+  const navigate = useNavigate();
+
   async function handleRegister(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -23,9 +26,8 @@ function Register() {
         email,
         password
       );
-
       console.log("Utilizador criado:", userCredential.user);
-    
+      navigate("/login");
     } catch (error) {
       console.error(error.code, error.message);
     }
