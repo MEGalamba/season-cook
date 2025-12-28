@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useState } from "react";
+import { navigate } from "react";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function Login() {
   }
 
   async function handleLogin(event) {
-    event.preventDefault(); // 🔴 MUITO IMPORTANTE
+    event.preventDefault();
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -23,10 +24,13 @@ function Login() {
         email,
         password
       );
-
-      console.log("Login com sucesso:", userCredential.user);
+      setPassword("");
+      setEmail("");
+      console.log("Login:", userCredential.user);
+      navigate("/");
     } catch (error) {
       console.error(error.code, error.message);
+      setPassword("");
     }
   }
 
