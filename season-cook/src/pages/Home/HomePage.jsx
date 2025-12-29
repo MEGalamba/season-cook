@@ -1,5 +1,5 @@
 //import BlogHighlights from "./BlogHighlights";
-import Hero from "./Hero";
+import Hero from "../../components/ui/Hero";
 import FoodstuffList from "../../components/Foodstuff/FoodstuffList";
 
 //import Footer from "../../components/Footer";
