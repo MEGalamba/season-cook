@@ -1,4 +1,11 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function getRecipes() {
@@ -22,4 +29,18 @@ export async function getRecipesByFoodstuff(foodId) {
     id: doc.id,
     ...doc.data(),
   }));
+}
+
+export async function getRecipeById(recipeId) {
+  const docRef = doc(db, "recipes", recipeId);
+  const snapshot = await getDoc(docRef);
+
+  if (!snapshot.exists()) {
+    return null;
+  }
+
+  return {
+    id: snapshot.id,
+    ...snapshot.data(),
+  };
 }
