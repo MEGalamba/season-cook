@@ -3,7 +3,7 @@ function CommentsCard({ comment }) {
   return (
     <div>
       <ul>
-        <li key={comment.id}>
+        <li>
           <img src={comment.userPhoto} alt="imagem do utilizador" width={40} />
           <strong>{comment.userName}</strong>
           <span> — {date?.toLocaleDateString("pt-PT")}</span>

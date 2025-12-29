@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getRecipeById } from "../services/recipeSevice";
 import RecipeCard from "../components/Recipe/RecipeCard";
 import CommentsCard from "../components/Comments/CommentCard";
+import CommentForm from "../components/Comments/CommentForm";
+import { getCommentsByRecipeId } from "../services/commentService";
 import { useParams } from "react-router-dom";
 
 export default function RecipeDetail() {
@@ -9,6 +11,7 @@ export default function RecipeDetail() {
 
   const [recipe, setRecipe] = useState("");
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
 
   async function fetchRecipe() {
     try {
@@ -22,6 +25,15 @@ export default function RecipeDetail() {
     }
   }
 
+  async function fetchComments() {
+    const data = await getCommentsByRecipeId(recipeId);
+    setComments(data);
+  }
+
+  useEffect(() => {
+    fetchComments();
+  }, [recipeId]);
+
   useEffect(() => {
     fetchRecipe();
   }, []);
@@ -30,13 +42,14 @@ export default function RecipeDetail() {
     return (
       <>
         <RecipeCard key={recipe.id} recipe={recipe} />
-        {recipe.comments.length > 0 ? (
-          recipe.comments.map((comment) => (
+        {comments.length > 0 ? (
+          comments.map((comment) => (
             <CommentsCard key={comment.id} comment={comment} />
           ))
         ) : (
           <p>Esta receita ainda não tem comentários.</p>
         )}
+        <CommentForm recipe={recipe} />
       </>
     );
   }

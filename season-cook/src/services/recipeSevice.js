@@ -5,6 +5,8 @@ import {
   getDoc,
   query,
   where,
+  serverTimestamp,
+  addDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -43,4 +45,13 @@ export async function getRecipeById(recipeId) {
     id: snapshot.id,
     ...snapshot.data(),
   };
+}
+
+export async function addCommentToRecipe(recipeId, comment) {
+  const commentsRef = collection(db, "recipes", recipeId, "comments");
+
+  await addDoc(commentsRef, {
+    ...comment,
+    createdAt: serverTimestamp(),
+  });
 }
