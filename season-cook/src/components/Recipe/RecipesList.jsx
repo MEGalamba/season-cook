@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getRecipes, getRecipesByFoodstuff } from "../../services/recipeSevice";
+import { Link } from "react-router-dom";
 import RecipeCard from "./RecipeCard";
 import SeasonFilterBar from "../ui/SeasonFilter";
 import SearchFilterBar from "../ui/SearchFilter";
@@ -37,10 +38,12 @@ export default function RecipesList({ foodId }) {
   if (!loading) {
     return (
       <div>
-        <SearchFilterBar searchValue={search} onSearchChange={setSearch}/>
+        <SearchFilterBar searchValue={search} onSearchChange={setSearch} />
         <SeasonFilterBar seasonValue={season} onSeasonChange={setSeason} />
         {filteredRecipes.map((recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <Link key={recipe.id} to={`/recipe/${recipe.id}`}>
+            <RecipeCard recipe={recipe} />
+          </Link>
         ))}
       </div>
     );
