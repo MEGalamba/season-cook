@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Foodstuff from "./pages/Foodstuff";
 import Recipes from "./pages/Recipes";
+import RecipeDetail from "./pages/RecipeDetail";
 import FoodstuffRecipes from "./pages/FoodstuffRecipes";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/foodstuff" element={<Foodstuff />} />
 
         <Route path="/foodstuff/:foodId" element={<FoodstuffRecipes />} />
+        <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
 
         {/* fallback (rota inválida) */}
         <Route path="*" element={<h2>Página não encontrada</h2>} />
