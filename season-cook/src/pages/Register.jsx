@@ -2,10 +2,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
+import { getFirebaseErrorMessage } from "../services/firebaseErrors";
 
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -21,22 +23,19 @@ function Register() {
     event.preventDefault();
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("Utilizador criado:", userCredential.user);
+      await createUserWithEmailAndPassword(auth, email, password);
+      //mensagem de sucesso
+      alert("Conta criada com sucesso!");
       navigate("/login");
     } catch (error) {
-      console.error(error.code, error.message);
+      setError(getFirebaseErrorMessage(error.code));
     }
   }
 
   return (
     <div>
       <h2>Registo</h2>
-
+      {error && <p>{error}</p>}
       <form onSubmit={handleRegister}>
         <input
           type="email"

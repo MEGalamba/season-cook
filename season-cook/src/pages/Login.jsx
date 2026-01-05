@@ -2,10 +2,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useState } from "react";
 import { navigate } from "react";
+import { getFirebaseErrorMessage } from "../services/firebaseErrors";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -29,15 +31,14 @@ function Login() {
       console.log("Login:", userCredential.user);
       navigate("/");
     } catch (error) {
-      console.error(error.code, error.message);
-      setPassword("");
+      setError(getFirebaseErrorMessage(error.code));
     }
   }
 
   return (
     <div>
       <h2>Login</h2>
-
+      {error && <p>{error}</p>}
       <form onSubmit={handleLogin}>
         <input
           type="email"
