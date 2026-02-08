@@ -81,3 +81,20 @@ export async function getUserRating(userId, recipeId) {
 
   return null;
 }
+
+
+//pagination for foodstuff
+export async function getRecipesPaginated(page, pageSize) {
+  const snapshot = await getDocs(collection(db, "recipes"));
+
+  const allFoods = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+
+  return allFoods.slice(start, end);
+}
+

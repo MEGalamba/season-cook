@@ -64,7 +64,9 @@ export default function RecipeDetail({ isAdmin = false, onEdit, onDelete }) {
     return (
       <>
         <RecipeCard key={recipe.id} recipe={recipe} />
-        {!isAdmin && <RatingComponent onRating={handleRate} />}
+        {!isAdmin && (
+          <RatingComponent onRating={handleRate} userRating={userRating} />
+        )}
         {isAdmin && (
           <>
             <button onClick={() => onEdit(recipe)}>Editar</button>
