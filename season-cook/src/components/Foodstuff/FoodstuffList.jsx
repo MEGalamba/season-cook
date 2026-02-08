@@ -4,7 +4,7 @@ import SeasonFilterBar from "../ui/SeasonFilter";
 import SearchFilterBar from "../ui/SearchFilter";
 import FoodstuffCard from "./FoodstuffCard";
 
-function FoodstuffList() {
+function FoodstuffList({ isAdmin = false, onEdit, onDelete }) {
   const [foodstuffs, setFoodstuffs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [season, setSeason] = useState("Todo o ano");
@@ -39,7 +39,15 @@ function FoodstuffList() {
         <SeasonFilterBar seasonValue={season} onSeasonChange={setSeason} />
         <SearchFilterBar searchValue={search} onSearchChange={setSearch} />
         {filteredFoods.map((food) => (
-          <FoodstuffCard key={food.id} food={food} />
+          <div key={food.id}>
+            <FoodstuffCard food={food} />
+            {isAdmin && (
+              <>
+                <button onClick={() => onEdit(food)}>Editar</button>
+                <button onClick={() => onDelete(food.docId)}>Apagar</button>
+              </>
+            )}
+          </div>
         ))}
       </div>
     );

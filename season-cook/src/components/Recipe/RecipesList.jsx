@@ -5,7 +5,12 @@ import RecipeCard from "./RecipeCard";
 import SeasonFilterBar from "../ui/SeasonFilter";
 import SearchFilterBar from "../ui/SearchFilter";
 
-export default function RecipesList({ foodId }) {
+export default function RecipesList({
+  foodId,
+  isAdmin = false,
+  onEdit,
+  onDelete,
+}) {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [season, setSeason] = useState("Todo o ano");
@@ -24,7 +29,7 @@ export default function RecipesList({ foodId }) {
     }
   }
 
-  useEffect(() => { 
+  useEffect(() => {
     fetchRecipes();
   }, [foodId]);
 

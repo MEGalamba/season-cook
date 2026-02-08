@@ -1,34 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { db } from "../services/firebase";
 import {
   collection,
-  getDocs,
   addDoc,
   updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import FoodstuffCard from "../components/Foodstuff/FoodstuffCard";
 import FoodstuffForm from "../components/Foodstuff/FoodstuffForm";
-import SeasonFilterBar from "../components/ui/SeasonFilter";
-import SearchFilterBar from "../components/ui/SearchFilter";
+import FoodstuffList from "../components/Foodstuff/FoodstuffList";
+import RecipeForm from "../components/Recipe/RecipeForm";
+import RecipesList from "../components/Recipe/RecipesList";
 
 function Backoffice() {
-  const [foodstuff, setFoodstuff] = useState([]);
   const [editing, setEditing] = useState(null);
-  const [season, setSeason] = useState("Todo o ano");
-  const [search, setSearch] = useState("");
-
-  const fetchFoodstuff = async () => {
-    const snapshot = await getDocs(collection(db, "foodstuff"));
-    setFoodstuff(
-      snapshot.docs.map((doc) => ({ docId: doc.id, id: doc.id, ...doc.data() }))
-    );
-  };
-
-  useEffect(() => {
-    fetchFoodstuff();
-  }, []);
 
   const handleAdd = async (food) => {
     const docRef = await addDoc(collection(db, "foodstuff"), {
@@ -57,37 +42,43 @@ function Backoffice() {
     fetchFoodstuff();
   };
 
-  const filteredFoods = foodstuff.filter((foodstuffs) => {
-    return (
-      (season === "Todo o ano" || foodstuffs.season === season) &&
-      foodstuffs.name.toLowerCase().includes(search.toLowerCase())
-    );
-  });
-
   return (
-    <div>
-      <h1>Backoffice - Foodstuff</h1>
+    <>
+      <div>
+        <h1>Backoffice - Foodstuff</h1>
 
-      {/* Formulario de adicionar/editar */}
-      <FoodstuffForm
-        onSubmit={editing ? handleUpdate : handleAdd}
-        initialData={editing}
-        key={editing?.id || "new"}
-      />
+        {/* Formulario de adicionar/editar */}
+        <FoodstuffForm
+          onSubmit={editing ? handleUpdate : handleAdd}
+          initialData={editing}
+          key={editing?.id || "new"}
+        />
 
-      {/*Barra de pesquisa*/}
-      <SeasonFilterBar seasonValue={season} onSeasonChange={setSeason} />
-      <SearchFilterBar searchValue={search} onSearchChange={setSearch} />
-      {filteredFoods.map((food) => (
-        <div key={food.id}>
-          {/* Lista de alimentos filtrados*/}
+        {/* Formulario de adicionar/editar */}
+        <FoodstuffList
+          isAdmin={true}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      </div>
+      <div>
+        <h1>Backoffice - Foodstuff</h1>
 
-          <FoodstuffCard food={food} isAdmin={true} />
-          <button onClick={() => handleEdit(food)}>Editar</button>
-          <button onClick={() => handleDelete(food.docId)}>Apagar</button>
-        </div>
-      ))}
-    </div>
+        {/* Formulario de adicionar/editar */}
+        <RecipeForm
+          onSubmit={editing ? handleUpdate : handleAdd}
+          initialData={editing}
+          key={editing?.id || "new"}
+        />
+
+        {/* Lista de receitas */}
+        <RecipesList
+          isAdmin={true}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      </div>
+    </>
   );
 }
 

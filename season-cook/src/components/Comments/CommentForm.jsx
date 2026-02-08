@@ -5,7 +5,7 @@ import { addCommentToRecipe } from "../../services/recipeSevice";
 export default function CommentForm({ recipe }) {
   const [text, setText] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const { user, loading } = useAuthContext();
+  const user = useAuthContext();
 
   async function handleSubmit(e) {
     e.preventDefault();

@@ -7,6 +7,7 @@ import {
   where,
   arrayUnion,
   updateDoc,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -22,7 +23,7 @@ export async function getRecipes() {
 export async function getRecipesByFoodstuff(foodId) {
   const q = query(
     collection(db, "recipes"),
-    where("ingredientsId", "array-contains", foodId)
+    where("ingredientsId", "array-contains", foodId),
   );
 
   const snapshot = await getDocs(q);
@@ -56,4 +57,27 @@ export async function addCommentToRecipe(recipeDocId, comment) {
       createdAt: new Date(),
     }),
   });
+}
+
+export async function rateRecipe(userId, recipeId, rating) {
+  const ratingId = `${userId}_${recipeId}`;
+
+  await setDoc(doc(db, "recipeRatings", ratingId), {
+    userId,
+    recipeId,
+    rating,
+    updatedAt: new Date(),
+  });
+}
+
+export async function getUserRating(userId, recipeId) {
+  const ratingId = `${userId}_${recipeId}`;
+
+  const snap = await getDoc(doc(db, "recipeRatings", ratingId));
+
+  if (snap.exists()) {
+    return snap.data();
+  }
+
+  return null;
 }
