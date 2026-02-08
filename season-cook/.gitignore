@@ -28,3 +28,6 @@ dist-ssr
 
 # seed for database firebase
 src/services/seed
+
+# script to create admin
+firebase-admin

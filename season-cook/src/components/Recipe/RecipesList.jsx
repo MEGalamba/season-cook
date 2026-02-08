@@ -24,7 +24,7 @@ export default function RecipesList({ foodId }) {
     }
   }
 
-  useEffect(() => {
+  useEffect(() => { 
     fetchRecipes();
   }, [foodId]);
 

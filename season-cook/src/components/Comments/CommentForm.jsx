@@ -20,14 +20,13 @@ export default function CommentForm({ recipe }) {
       const newComment = {
         text,
         userId: user.uid,
-        userName: user.displayName,
-        userPhoto: user.photoURL,
+        userName: user.email,
       };
 
       // guarda no Firestore
-      await addCommentToRecipe(recipe.id, newComment);
+      await addCommentToRecipe(recipe.docId, newComment);
 
-      setText(""); // limpa o formulário
+      setText("");
     } catch (error) {
       console.error(error);
       setLoading(false);

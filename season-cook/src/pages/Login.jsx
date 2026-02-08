@@ -1,14 +1,14 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import { useState } from "react";
-import { navigate } from "react";
+import { useNavigate } from "react-router-dom";
 import { getFirebaseErrorMessage } from "../services/firebaseErrors";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   function handleEmailChange(event) {
     setEmail(event.target.value);
   }
@@ -26,12 +26,21 @@ function Login() {
         email,
         password
       );
-      setPassword("");
-      setEmail("");
+      //setEmail("");
+      //setPassword("");
+      const tokenResult = await userCredential.user.getIdTokenResult();
+
+      console.log("tokenResult:", tokenResult.claims.admin);
+      if (tokenResult.claims.admin) {
+        navigate("/backoffice");
+      } else {
+        navigate("/");
+      }
+      //debug
       console.log("Login:", userCredential.user);
-      navigate("/");
     } catch (error) {
       setError(getFirebaseErrorMessage(error.code));
+      //setPassword("");
     }
   }
 

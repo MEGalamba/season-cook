@@ -7,6 +7,8 @@ import Foodstuff from "./pages/Foodstuff";
 import Recipes from "./pages/Recipes";
 import RecipeDetail from "./pages/RecipeDetail";
 import FoodstuffRecipes from "./pages/FoodstuffRecipes";
+import Backoffice from "./pages/Backoffice";
+import AdminRoute from "./services/adminRoute";
 
 function App() {
   return (
@@ -25,6 +27,15 @@ function App() {
         <Route path="/foodstuff/:foodId" element={<FoodstuffRecipes />} />
         <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
 
+        {/* página privada */}
+        <Route
+          path="/backoffice"
+          element={
+            <AdminRoute>
+              <Backoffice />
+            </AdminRoute>
+          }
+        />
         {/* fallback (rota inválida) */}
         <Route path="*" element={<h2>Página não encontrada</h2>} />
       </Routes>

@@ -5,8 +5,8 @@ import {
   getDoc,
   query,
   where,
-  serverTimestamp,
-  addDoc,
+  arrayUnion,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -47,11 +47,13 @@ export async function getRecipeById(recipeId) {
   };
 }
 
-export async function addCommentToRecipe(recipeId, comment) {
-  const commentsRef = collection(db, "recipes", recipeId, "comments");
+export async function addCommentToRecipe(recipeDocId, comment) {
+  const recipeRef = doc(db, "recipes", recipeDocId);
 
-  await addDoc(commentsRef, {
-    ...comment,
-    createdAt: serverTimestamp(),
+  await updateDoc(recipeRef, {
+    comments: arrayUnion({
+      ...comment,
+      createdAt: new Date(),
+    }),
   });
 }
