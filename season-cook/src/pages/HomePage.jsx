@@ -1,9 +1,9 @@
 //import BlogHighlights from "./BlogHighlights";
 //import Footer from "../../components/Footer";
-import Hero from "../../components/ui/Hero";
-import Foodstuff from "../Foodstuff";
-import Recipes from "../Recipes";
-import Section from "../../components/ui/Section";
+import Hero from "../components/ui/Hero";
+import Foodstuff from "./Foodstuff";
+import Recipes from "./Recipes";
+import Section from "../components/ui/Section";
 import { Container } from "react-bootstrap";
 
 function HomePage() {
