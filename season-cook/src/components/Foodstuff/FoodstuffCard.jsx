@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { Card, Col } from "react-bootstrap";
+import { Card, Col, Button } from "react-bootstrap";
 
-function FoodstuffCard({ food, isAdmin }) {
+function FoodstuffCard({ food, isAdmin, onEdit, onDelete }) {
   return (
     <Col xs={12} sm={6} md={3} className="mb-4">
       {isAdmin ? (
@@ -16,6 +16,24 @@ function FoodstuffCard({ food, isAdmin }) {
             <Card.Title className="h6">{food.name}</Card.Title>
             <Card.Subtitle className="text-muted">{food.season}</Card.Subtitle>
           </Card.Body>
+
+          {/* Botões de admin dentro do card */}
+          <Card.Footer className="d-flex justify-content-between">
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={() => onEdit(food)}
+            >
+              Editar
+            </Button>
+            <Button
+              variant="outline-danger"
+              size="sm"
+              onClick={() => onDelete(food.docId)}
+            >
+              Apagar
+            </Button>
+          </Card.Footer>
         </Card>
       ) : (
         <Link to={`/foodstuff/${food.id}`} className="text-decoration-none">
