@@ -71,7 +71,7 @@ function Register() {
           <Form.Group className="mb-3" controlId="formPassword">
             <Form.Label>Confirmação da password</Form.Label>
             <Form.Control
-              type=" password"
+              type="password"
               placeholder="confirme password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
