@@ -9,36 +9,39 @@ import RecipeDetail from "./pages/RecipeDetail";
 import FoodstuffRecipes from "./pages/FoodstuffRecipes";
 import Backoffice from "./pages/Backoffice";
 import AdminRoute from "./services/adminRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        {/* rota inicial */}
-        <Route path="/" element={<HomePage />} />
+      <AuthProvider>
+        <Routes>
+          {/* rota inicial */}
+          <Route path="/" element={<HomePage />} />
 
-        {/* páginas públicas */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/foodstuff" element={<Foodstuff />} />
+          {/* páginas públicas */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/foodstuff" element={<Foodstuff />} />
 
-        <Route path="/foodstuff/:foodId" element={<FoodstuffRecipes />} />
-        <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+          <Route path="/foodstuff/:foodId" element={<FoodstuffRecipes />} />
+          <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
 
-        {/* página privada */}
-        <Route
-          path="/backoffice"
-          element={
-            <AdminRoute>
-              <Backoffice />
-            </AdminRoute>
-          }
-        />
-        {/* fallback (rota inválida) */}
-        <Route path="*" element={<h2>Página não encontrada</h2>} />
-      </Routes>
+          {/* página privada */}
+          <Route
+            path="/backoffice"
+            element={
+              <AdminRoute>
+                <Backoffice />
+              </AdminRoute>
+            }
+          />
+          {/* fallback (rota inválida) */}
+          <Route path="*" element={<h2>Página não encontrada</h2>} />
+        </Routes>
+      </AuthProvider>
     </>
   );
 }

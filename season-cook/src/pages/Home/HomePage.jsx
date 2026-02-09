@@ -1,9 +1,9 @@
 //import BlogHighlights from "./BlogHighlights";
 import Hero from "../../components/ui/Hero";
-import FoodstuffList from "../../components/Foodstuff/FoodstuffList";
+import Foodstuff from "../Foodstuff";
 
 //import Footer from "../../components/Footer";
-import RecipesList from "../../components/Recipe/RecipesList";
+import Recipes from "../Recipes";
 import Section from "../../components/Section";
 
 function HomePage() {
@@ -11,10 +11,10 @@ function HomePage() {
     <main>
       <Hero />
       <Section title="Produtos da Época">
-        <FoodstuffList />
+        <Foodstuff />
       </Section>
       <Section title="Receitas em Destaque">
-        <RecipesList />
+        <Recipes />
       </Section>
       {
         //<BlogHighlights />

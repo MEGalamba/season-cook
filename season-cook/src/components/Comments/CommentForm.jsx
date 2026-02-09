@@ -5,7 +5,7 @@ import { addCommentToRecipe } from "../../services/recipeSevice";
 export default function CommentForm({ recipe }) {
   const [text, setText] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const user = useAuthContext();
+  const { user } = useAuthContext();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -22,7 +22,8 @@ export default function CommentForm({ recipe }) {
         userId: user.uid,
         userName: user.email,
       };
-
+      console.log(newComment);
+      console.log(recipe.docId);
       // guarda no Firestore
       await addCommentToRecipe(recipe.docId, newComment);
 

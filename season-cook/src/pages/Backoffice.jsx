@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../services/firebase";
 import {
   collection,
@@ -11,9 +11,21 @@ import FoodstuffForm from "../components/Foodstuff/FoodstuffForm";
 import FoodstuffList from "../components/Foodstuff/FoodstuffList";
 import RecipeForm from "../components/Recipe/RecipeForm";
 import RecipesList from "../components/Recipe/RecipesList";
+import { getFoodstuffs } from "../services/foodstuffService";
 
 function Backoffice() {
   const [editing, setEditing] = useState(null);
+  const [foodstuff, setFoodstuff] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    loadFoods();
+  });
+
+  async function loadFoods() {
+    const data = await getFoodstuffs();
+    setFoodstuff(data);
+  }
 
   const handleAdd = async (food) => {
     const docRef = await addDoc(collection(db, "foodstuff"), {
@@ -21,7 +33,7 @@ function Backoffice() {
       id: "",
     });
     await updateDoc(docRef);
-    fetchFoodstuff();
+    getFoodstuffs();
   };
 
   const handleEdit = (food) => setEditing(food);
@@ -33,13 +45,13 @@ function Backoffice() {
     await updateDoc(docRef, { ...updatedFood, id: editing.id });
 
     setEditing(null);
-    fetchFoodstuff();
+    getFoodstuffs();
   };
 
   const handleDelete = async (id) => {
     console.log(id);
     await deleteDoc(doc(db, "foodstuff", id));
-    fetchFoodstuff();
+    getFoodstuffs();
   };
 
   return (
@@ -59,6 +71,7 @@ function Backoffice() {
           isAdmin={true}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          foods={foodstuff}
         />
       </div>
       <div>
@@ -72,11 +85,6 @@ function Backoffice() {
         />
 
         {/* Lista de receitas */}
-        <RecipesList
-          isAdmin={true}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
       </div>
     </>
   );
