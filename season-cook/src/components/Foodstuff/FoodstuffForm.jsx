@@ -56,7 +56,7 @@ export default function FoodstuffForm({ onSubmit, initialData }) {
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Temporada</Form.Label>
+        <Form.Label>Época do ano</Form.Label>
         <Form.Control
           type="text"
           placeholder="Ex: Verão, Inverno, Todo o ano"
