@@ -7,7 +7,7 @@ export default function Foodstuff() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 4;
 
   useEffect(() => {
     loadFoods();

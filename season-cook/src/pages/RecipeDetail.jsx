@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RecipeCard from "../components/Recipe/RecipeCard";
+import RecipeCardDetail from "../components/Recipe/RecipeCardDetail";
 import CommentsCard from "../components/Comments/CommentCard";
 import CommentForm from "../components/Comments/CommentForm";
 import RatingComponent from "../components/Comments/RatingComponent";
@@ -7,6 +7,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db, auth } from "../services/firebase";
 import { useParams } from "react-router-dom";
 import { getUserRating, rateRecipe } from "../services/recipeSevice";
+import { Container } from "react-bootstrap";
 
 export default function RecipeDetail({ isAdmin = false, onEdit, onDelete }) {
   const { recipeId } = useParams();
@@ -61,8 +62,11 @@ export default function RecipeDetail({ isAdmin = false, onEdit, onDelete }) {
 
   if (!loading) {
     return (
-      <>
-        <RecipeCard key={recipe.id} recipe={recipe} />
+      <Container className="py-5" style={{ maxWidth: "850px" }}>
+        {/* Receita */}
+        <RecipeCardDetail key={recipe.id} recipe={recipe} />
+
+        {/* Rating */}
         {!isAdmin && (
           <RatingComponent onRating={handleRate} userRating={userRating} />
         )}
@@ -80,7 +84,7 @@ export default function RecipeDetail({ isAdmin = false, onEdit, onDelete }) {
           <p>Esta receita ainda não tem comentários.</p>
         )}
         <CommentForm recipe={recipe} />
-      </>
+      </Container>
     );
   }
 }

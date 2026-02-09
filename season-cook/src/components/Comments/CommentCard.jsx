@@ -1,16 +1,32 @@
+import { Card } from "react-bootstrap";
+
 function CommentsCard({ comment }) {
   const date = comment.createdAt?.toDate();
+
   return (
-    <div>
-      <ul>
-        <li>
-          <img src={comment.userPhoto} alt="imagem do utilizador" width={40} />
-          <strong>{comment.userName}</strong>
-          <span> — {date?.toLocaleDateString("pt-PT")}</span>
-          <p>{comment.text}</p>
-        </li>
-      </ul>
-    </div>
+    <Card className="mb-3 shadow-sm">
+      <Card.Body className="d-flex gap-3">
+        {/* Foto do usuário */}
+        <img
+          src={comment.userPhoto}
+          alt={comment.userName}
+          width={50}
+          height={50}
+          style={{ borderRadius: "50%", objectFit: "cover" }}
+        />
+
+        {/* Conteúdo do comentário */}
+        <div>
+          <div className="d-flex align-items-center gap-2 mb-1">
+            <strong>{comment.userName}</strong>
+            <span className="text-muted" style={{ fontSize: "0.85rem" }}>
+              — {date?.toLocaleDateString("pt-PT")}
+            </span>
+          </div>
+          <p className="mb-0">{comment.text}</p>
+        </div>
+      </Card.Body>
+    </Card>
   );
 }
 

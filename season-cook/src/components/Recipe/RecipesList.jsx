@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import RecipeCard from "./RecipeCard";
 import SeasonFilterBar from "../ui/SeasonFilter";
 import SearchFilterBar from "../ui/SearchFilter";
@@ -9,6 +8,7 @@ export default function RecipesList({ recipes }) {
   const [season, setSeason] = useState("Todo o ano");
   const [search, setSearch] = useState("");
 
+  //filtro de nome e epoca do ano
   const filteredRecipes = recipes.filter((recipes) => {
     return (
       (season === "Todo o ano" || recipes.season === season) &&

@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import RecipesList from "../components/Recipe/RecipesList";
 import { getRecipesPaginated } from "../services/recipeSevice";
 
-export default function Recipes({isAdmin=false}) {
+export default function Recipes({ isAdmin = false }) {
   const [recipes, setRecipes] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 4;
 
   useEffect(() => {
     loadRecipes();
