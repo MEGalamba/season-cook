@@ -2,6 +2,7 @@ import { useState } from "react";
 import SeasonFilterBar from "../ui/SeasonFilter";
 import SearchFilterBar from "../ui/SearchFilter";
 import FoodstuffCard from "./FoodstuffCard";
+import { Row } from "react-bootstrap";
 
 function FoodstuffList({ isAdmin = false, onEdit, onDelete, foods }) {
   const [season, setSeason] = useState("Todo o ano");
@@ -20,17 +21,31 @@ function FoodstuffList({ isAdmin = false, onEdit, onDelete, foods }) {
     <div>
       <SeasonFilterBar seasonValue={season} onSeasonChange={setSeason} />
       <SearchFilterBar searchValue={search} onSearchChange={setSearch} />
-      {filteredFoods.map((food) => (
-        <div key={food.id}>
-          <FoodstuffCard food={food} isAdmin={isAdmin} />
-          {isAdmin && (
-            <>
-              <button onClick={() => onEdit(food)}>Editar</button>
-              <button onClick={() => onDelete(food.docId)}>Apagar</button>
-            </>
-          )}
-        </div>
-      ))}
+
+      <Row>
+        {filteredFoods.map((food) => (
+          <FoodstuffCard key={food.id} food={food} isAdmin={isAdmin} />
+        ))}
+      </Row>
+
+      {/* Botões de edição / apagar */}
+      {isAdmin &&
+        filteredFoods.map((food) => (
+          <div key={food.id} className="d-flex gap-2 my-2">
+            <button
+              className="btn btn-outline-primary"
+              onClick={() => onEdit(food)}
+            >
+              Editar
+            </button>
+            <button
+              className="btn btn-outline-danger"
+              onClick={() => onDelete(food.docId)}
+            >
+              Apagar
+            </button>
+          </div>
+        ))}
     </div>
   );
 }

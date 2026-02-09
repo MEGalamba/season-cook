@@ -42,9 +42,8 @@ export default function RecipeDetail({ isAdmin = false, onEdit, onDelete }) {
   useEffect(() => {
     async function loadUserRating() {
       if (!user || !recipeId) return;
-
+      // vai buscar o rating de o utilizador nesta receita
       const rating = await getUserRating(user.uid, recipeId);
-
       if (rating) {
         setUserRating(rating.rating);
       }

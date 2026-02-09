@@ -10,6 +10,7 @@ import FoodstuffRecipes from "./pages/FoodstuffRecipes";
 import Backoffice from "./pages/Backoffice";
 import AdminRoute from "./services/adminRoute";
 import { AuthProvider } from "./context/AuthContext";
+import "./global.css";
 
 function App() {
   return (

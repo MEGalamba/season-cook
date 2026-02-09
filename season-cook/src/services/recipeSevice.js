@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
+// vai buscar todas as receitas
 export async function getRecipes() {
   const snapshot = await getDocs(collection(db, "recipes"));
 
@@ -20,6 +21,7 @@ export async function getRecipes() {
   }));
 }
 
+// Vai buscar todas as receitas que contenham um certo ingrediente
 export async function getRecipesByFoodstuff(foodId) {
   const q = query(
     collection(db, "recipes"),
@@ -34,6 +36,7 @@ export async function getRecipesByFoodstuff(foodId) {
   }));
 }
 
+// vai buscar receitas pelo seu id
 export async function getRecipeById(recipeId) {
   const docRef = doc(db, "recipes", recipeId);
   const snapshot = await getDoc(docRef);
@@ -48,6 +51,7 @@ export async function getRecipeById(recipeId) {
   };
 }
 
+// adiciona um comentario à receita
 export async function addCommentToRecipe(recipeDocId, comment) {
   const recipeRef = doc(db, "recipes", recipeDocId);
 
@@ -59,7 +63,7 @@ export async function addCommentToRecipe(recipeDocId, comment) {
   });
 }
 
-//rever logica
+//atualiza o contador de votos, e a media da avaliacao da receita
 export async function rateRecipe(userId, recipeId, rating) {
   const ratingId = `${userId}_${recipeId}`;
   const ratingRef = doc(db, "recipeRatings", ratingId);
@@ -108,6 +112,7 @@ export async function rateRecipe(userId, recipeId, rating) {
 }
 
 
+// vai buscar o rating de um utilizador numa receita
 export async function getUserRating(userId, recipeId) {
   const ratingId = `${userId}_${recipeId}`;
 

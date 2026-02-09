@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+
 import RecipeCard from "./RecipeCard";
 import SeasonFilterBar from "../ui/SeasonFilter";
 import SearchFilterBar from "../ui/SearchFilter";
+import { Row } from "react-bootstrap";
 
 export default function RecipesList({ recipes }) {
   const [season, setSeason] = useState("Todo o ano");
@@ -17,13 +18,15 @@ export default function RecipesList({ recipes }) {
 
   return (
     <div>
+      {/*Filtros de pesquisa */}
       <SearchFilterBar searchValue={search} onSearchChange={setSearch} />
       <SeasonFilterBar seasonValue={season} onSeasonChange={setSeason} />
-      {filteredRecipes.map((recipe) => (
-        <Link key={recipe.id} to={`/recipe/${recipe.id}`}>
+      {/* Receitas */}
+      <Row>
+        {filteredRecipes.map((recipe) => (
           <RecipeCard recipe={recipe} />
-        </Link>
-      ))}
+        ))}
+      </Row>
     </div>
   );
 }
